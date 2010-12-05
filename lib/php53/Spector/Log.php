@@ -33,14 +33,14 @@ class Log
 				
 				switch ($type)
 				{
-					case 'Mongo':
+					case 'Spector\MongoWriter':
 						$writer = new MongoWriter();
 						
 						if (!isset($specs['server']) || !isset($specs['database'])) {
 							throw new \Exception('Server or database not set.');
 						}
 						
-						$connection = new Mongo($specs['server'] . (isset($specs['port']) ? $specs['port'] : ''));
+						$connection = new \Mongo($specs['server'] . (isset($specs['port']) ? $specs['port'] : ''));
 						
 						$writer->setConnection($connection);
 						$writer->setDatabase($specs['database']);
@@ -57,7 +57,7 @@ class Log
 			unset($data['writers']);
 		}
 		
-		foreach ($arr as $property => $value)
+		foreach ($data as $property => $value)
 		{
 			$setter = "set" . ucfirst($property);
 			if (method_exists($this, $setter))
