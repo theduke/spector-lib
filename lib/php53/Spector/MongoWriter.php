@@ -2,13 +2,13 @@
 
 namespace Spector;
 
-class MongoWriter implements Writer
+class MongoWriter extends BaseWriter implements Writer
 {
 	protected $_connection;
 	protected $_database;
 	protected $_collection = 'log_entries';
 	
-	public function __construct($connection, $database)
+	public function __construct($connection=null, $database=null)
 	{
 		$this->setConnection($connection);
 		$this->setDatabase($database);

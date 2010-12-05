@@ -16,6 +16,59 @@ class Log
 		
 	}
 	
+	/**
+	 * Add writers based on an array specification
+	 * @param array $data
+	 */
+	public function fromArray(array $data) {
+		// first handle writers
+		if (isset($data['writers'])) {
+			foreach ($data['writers'] as $type => $specs) {
+				
+				// if its an actual writer instance just add it
+				if ($specs instanceof Writer) {
+					$this->addWriter($specs);
+					continue;
+				}
+				
+				switch ($type)
+				{
+					case 'Mongo':
+						$writer = new MongoWriter();
+						
+						if (!isset($specs['server']) || !isset($specs['database'])) {
+							throw new \Exception('Server or database not set.');
+						}
+						
+						$connection = new Mongo($specs['server'] . (isset($specs['port']) ? $specs['port'] : ''));
+						
+						$writer->setConnection($connection);
+						$writer->setDatabase($specs['database']);
+						break;
+					default:
+						$writer = new $type();
+						$writer->fromArray($specs);
+						break;
+				}
+				
+				$this->addWriter($writer);
+			}
+			
+			unset($data['writers']);
+		}
+		
+		foreach ($arr as $property => $value)
+		{
+			$setter = "set" . ucfirst($property);
+			if (method_exists($this, $setter))
+			{
+				call_user_func(array($this, $setter), $value);
+			} else if (property_exists($this, $property)) {
+				$this->$property = $value;
+			}
+		}
+	}
+	
 	public function log($message, $severity, $data=null, $bucket=null, $type=null, $environment=null, $project=null, $time=null)
 	{
 		if (!$project) $project = $this->_project;

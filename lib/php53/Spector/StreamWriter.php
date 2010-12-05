@@ -2,7 +2,7 @@
 
 namespace Spector;
 
-class StreamWriter implements Writer
+class StreamWriter extends BaseWriter implements Writer
 {
 	protected $_stream;
 	
