@@ -1,0 +1,6 @@
+project: test
+type: log
+bucket: cli
+environment: dev
+database: spector
+host: localhost
