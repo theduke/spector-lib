@@ -15,6 +15,8 @@ class Spector_StreamWriter implements Spector_Writer
 	const FORMAT_CSV = 'csv';
 	const FORMAT_SERIALIZED = 'serialized';
 	
+	const SERIALIZE_SEPERATOR = '-|-|-|-|-|-|-|-|-|-|-|-|-';
+	
 	public function __construct($stream, $format)
 	{
 		$this->setStream($stream);
@@ -36,7 +38,7 @@ class Spector_StreamWriter implements Spector_Writer
 			case self::FORMAT_CSV:
 				break;
 			case self::FORMAT_SERIALIZED:
-				$output = serialize($entry->toArray()) . PHP_EOL;
+				$output = serialize($entry->toArray()) . self::SERIALIZE_SEPERATOR;
 				break;
 		}
 		
