@@ -90,12 +90,22 @@ class Log
 		$this->logEntry($entry);
 	}
 	
+	public function monitor($task, $state)
+	{
+		$message = "$task;$state";
+		
+		$additionalArgs = array_slice(func_get_args(), 2);
+		$args = array_merge(array($message, 'monitor'), $additionalArgs);
+		
+		call_user_func_array(array($this, 'log'), $args);
+	}
+	
 	public function __call($name, $arguments)
 	{
 		$arguments = array_values($arguments);
 		array_splice($arguments, 1, 0, $name);
 		
-		call_user_method_array('log', $this, $arguments);
+		call_user_func_array(array($this, 'log'), $arguments);
 	}
 	
 	public function logEntry(LogEntry $entry)

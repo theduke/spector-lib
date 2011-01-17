@@ -12,6 +12,7 @@ class LogEntry
 	const INFO = 'INFO';
 	const DEBUG = 'DEBUG';
 	const OTHER = 'OTHER';
+	const MONITOR = 'MONITOR';
 	
 	protected $_id;
 	
