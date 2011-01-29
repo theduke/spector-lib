@@ -17,7 +17,7 @@ class StreamWriter extends BaseWriter implements Writer
 	
 	const SERIALIZE_SEPERATOR = '-|-|-|-|-|-|-|-|-|-|-|-|-';
 	
-	public function __construct($stream, $format)
+	public function __construct($stream=null, $format=null)
 	{
 		$this->setStream($stream);
 		$this->setFormat($format);
