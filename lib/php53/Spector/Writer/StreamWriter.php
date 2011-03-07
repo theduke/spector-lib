@@ -2,6 +2,8 @@
 
 namespace Spector\Writer;
 
+use Spector\LogEntry;
+
 class StreamWriter extends BaseWriter implements Writer
 {
 	protected $_stream;
@@ -23,17 +25,31 @@ class StreamWriter extends BaseWriter implements Writer
 		$this->setFormat($format);
 	}
 	
-	public function write(LogEntry $entry)
+	public function write(Writable $entry)
 	{
 		$output = '';
 		
 		switch ($this->_format)
 		{
 			case self::FORMAT_READABLE:
-				$output = sprintf('%s: %s: %s', date('Y-M-d h:i:s', $entry->getTime()->getTimestamp()), $entry->getSeverity(), $entry->getMessage()) . PHP_EOL;
+				
+				if ($entry instanceof LogEntry)
+				{
+					$output = sprintf('%s: %s: %s', date('Y-M-d h:i:s', $entry->getTime()->getTimestamp()), $entry->getSeverity(), $entry->getMessage()) . PHP_EOL;
+				} else {
+					throw new \Exception('Not implemented.');
+				}
+				
 				break;
 			case self::FORMAT_ECHO:
-				$output = $entry->getMessage() . PHP_EOL;
+				
+				if ($entry instanceof LogEntry)
+				{
+					$output = $entry->getMessage() . PHP_EOL;
+				} else {
+					throw new \Exception('Not implemented.');
+				}
+				
 				break;
 			case self::FORMAT_CSV:
 				break;

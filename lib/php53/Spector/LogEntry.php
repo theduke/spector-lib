@@ -2,7 +2,9 @@
 
 namespace Spector;
 
-class LogEntry
+use Spector\Writer\Writable;
+
+class LogEntry implements Writable
 {
 	const EMERGENCY = 0;
 	const ALERT = 1;

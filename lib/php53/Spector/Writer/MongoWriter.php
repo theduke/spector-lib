@@ -41,12 +41,14 @@ class MongoWriter extends BaseWriter implements Writer
 		$this->_connection->close();
 	}
 	
-	public function write(LogEntry $entry)
+	public function write(Writable $entry)
 	{
-		$date = new MongoDate($entry->getTime()->getTimestamp());
-		
 		$data = $entry->toArray();
-		$data['time'] = $date;
+		
+		if (isset($data['time']) && !$data['time'])
+		{
+			$data['time'] = microtime();
+		}
 		
 		$this->_collection->insert($data);
 	}
