@@ -1,6 +1,6 @@
 <?php
 
-namespace Spector;
+namespace Spector\Writer;
 
 interface Writer
 {
@@ -9,4 +9,6 @@ interface Writer
 	public function validate();
 	
 	public function initialize();
+	
+	public function shutdown();
 }

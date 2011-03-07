@@ -1,6 +1,6 @@
 <?php
 
-namespace Spector;
+namespace Spector\Writer;
 
 abstract class BaseWriter implements Writer
 {

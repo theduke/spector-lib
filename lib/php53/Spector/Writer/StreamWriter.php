@@ -1,6 +1,6 @@
 <?php
 
-namespace Spector;
+namespace Spector\Writer;
 
 class StreamWriter extends BaseWriter implements Writer
 {
@@ -60,6 +60,11 @@ class StreamWriter extends BaseWriter implements Writer
 		
 		if (!$this->_handle)
 			throw new \Exception("Could not open stream {$this->_stream}");
+	}
+	
+	public function shutdown()
+	{
+		fclose($this->_handle);
 	}
 		
 	public function setStream($stream)

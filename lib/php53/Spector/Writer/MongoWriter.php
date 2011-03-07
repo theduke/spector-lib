@@ -1,6 +1,6 @@
 <?php
 
-namespace Spector;
+namespace Spector\Writer;
 
 class MongoWriter extends BaseWriter implements Writer
 {
@@ -34,6 +34,11 @@ class MongoWriter extends BaseWriter implements Writer
 		
 		if (is_string($this->_collection))
 			$this->_collection = $this->_database->selectCollection($this->_collection);
+	}
+	
+	public function shutdown()
+	{
+		$this->_connection->close();
 	}
 	
 	public function write(LogEntry $entry)
