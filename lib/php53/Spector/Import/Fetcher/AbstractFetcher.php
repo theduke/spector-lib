@@ -1,5 +1,9 @@
 <?php
 
+namespace Spector\Import\Fetcher;
+
+use Spector\Import;
+
 abstract class AbstractFetcher
 {
 	protected $_config;

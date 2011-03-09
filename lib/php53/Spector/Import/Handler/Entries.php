@@ -10,7 +10,7 @@ class Entries extends AbstractHandler implements Handler
 	/* (non-PHPdoc)
 	 * @see Spector\Import\Handler.Handler::getEntries()
 	 */
-	public function getEntries(array $data, \Spector\Import\Import $import)
+	public function getEntries($data, \Spector\Import\Import $import)
 	{
 		$entries = array();
 		

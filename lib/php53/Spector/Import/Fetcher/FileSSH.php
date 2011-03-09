@@ -1,10 +1,13 @@
 <?php
 
+namespace Spector\Import\Fetcher;
+
 use Spector\Import\Fetcher\Fetcher;
+use Spector\Import;
 
 class FileSSH extends AbstractFetcher implements Fetcher
 {
-	public function validateConfig(Spector\Import\Import $config)
+	public function validateConfig(Import\Import $config)
 	{
 		if (! ($remote = $config->getRemote()))
 		{
@@ -35,6 +38,8 @@ class FileSSH extends AbstractFetcher implements Fetcher
 
 		$host = $r->getHost();
 		$port = $r->getPort();
+		
+		if (!$port) $port = 22;
 		
 		$user = $r->getUserName();
 		$password = $r->getPassword();

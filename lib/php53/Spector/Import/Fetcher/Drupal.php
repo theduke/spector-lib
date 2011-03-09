@@ -1,31 +1,36 @@
 <?php
 
+namespace Spector\Import\Fetcher;
+
 use Spector\LogEntry;
+use Spector\Import;
 use Spector\Import\Fetcher\Fetcher;
 
-class File extends AbstractFetcher implements Fetcher 
+class Drupal extends AbstractFetcher implements Fetcher 
 {
 
-	public function validateConfig(Spector\Import\Import $config)
+	public function validateConfig(Import\Import $config)
 	{
 		if (!$config->getRemote())
 		{
 			throw new \Exception('No remote data set.');
 		}
 		
+		$r = $config->getRemote();
 		$file = $config->getRemote()->getResourcePath();
 		
-		if (!$file)
+		if (!($r->host && $r->username && $r->password && $r->resourcePath))
 		{
-			throw new \Exception("No file path set.");
-		} else if (!is_file($file) || !is_readable($file))
-		{
-			throw new \Exception("Filepath '$file' not readable or does not exist.");
+			throw new \Exception('Remote database data not set.');
 		}
 	}
 
-	public function fetchData(Spector\Import\Import $config)
+	public function fetchData()
 	{
+		if (!$this->_config) throw new \Exception('Not initialized.');
+		
+		$config = $this->_config;
+		
 		$entries = array();
 		
 		$handle = $this->connect($config);
@@ -73,7 +78,7 @@ class File extends AbstractFetcher implements Fetcher
 		return $entries;
 	}
 	
-	protected function connect(Spector\Import\Import $config)
+	protected function connect(Import\Import $config)
 	{
 		$r = $this->_config->getRemote();
 
@@ -99,6 +104,8 @@ class File extends AbstractFetcher implements Fetcher
 			throw new \Exception("Could not select database $dbname");
 		}
 		
+		mysql_query("SET NAMES 'utf8'", $handle);
+		
 		return $handle;
 	}
 	
@@ -111,24 +118,28 @@ class File extends AbstractFetcher implements Fetcher
 			$q .= ' WHERE wid > ' . $lastId;
 		}
 		
-		$result = mysql_query($q);
+		$result = mysql_query($q, $handle);
+		$result2 = mysql_query(str_replace('drupal_', '', $q), $handle);
 		
-		if ($result === false)
+		if ($result === false && $result2 === false)
 		{
-			throw new \Exception('Could not execute query query database.');
+			throw new \Exception('Could not query database.');
 		}
 		
-		return $result;
+		return $result ? $result : $result2;
 	}
 	
-	protected function dblog_format_message($dblog) {
+	protected function dblog_format_message($dblog) 
+	{
 	  // Legacy messages and user specified text
 	  if ($dblog->variables === 'N;') {
 	    return $dblog->message;
 	  }
 	  // Message to translate with injected variables
 	  else {
-	    return $this->drupal_t($dblog->message, unserialize($dblog->variables));
+	  	$vars = $dblog->variables;
+	  	
+	    return $this->drupal_t($dblog->message, unserialize($vars));
 	  }
 	}
 	

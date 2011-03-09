@@ -2,9 +2,11 @@
 
 namespace Spector\Writer;
 
+use Spector\LogEntry;
+
 interface Writer
 {
-	public function write(LogEntry $entry);
+	public function write(Writable $entry);
 	
 	public function validate();
 	

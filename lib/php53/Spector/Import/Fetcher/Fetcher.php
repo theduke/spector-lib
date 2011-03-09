@@ -2,7 +2,7 @@
 
 namespace Spector\Import\Fetcher;
 
-use SpecSpector\Import;
+use Spector\Import;
 
 interface Fetcher
 {

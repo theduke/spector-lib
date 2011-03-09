@@ -102,7 +102,7 @@ class LogEntry implements Writable
 	{
 		return $this->_severity;
 	}
-	public function setTime(\DateTime $time)
+	public function setTime($time)
 	{
 		$this->_time = $time;
 	}

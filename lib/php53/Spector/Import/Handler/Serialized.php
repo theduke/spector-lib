@@ -45,6 +45,6 @@ class Serialized extends AbstractHandler implements Handler
 			$newEntries[] = $entry;
 		}
 		
-		return $entries;
+		return $newEntries;
 	}
 }

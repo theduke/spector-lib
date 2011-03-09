@@ -2,7 +2,9 @@
 
 namespace Spector\Import;
 
-class Remote extends Spector\Common\Configurable
+use Spector\Common\Configurable;
+
+class Remote extends Configurable
 {
 	protected $_type;
 	

@@ -1,10 +1,13 @@
 <?php
 
+namespace Spector\Import\Fetcher;
+
 use Spector\Import\Fetcher\Fetcher;
+use Spector\Import;
 
 class File extends AbstractFetcher implements Fetcher 
 {
-	public function validateConfig(Spector\Import\Import $config)
+	public function validateConfig(Import\Import $config)
 	{
 		if (!$config->getRemote())
 		{

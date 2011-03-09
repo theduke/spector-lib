@@ -2,7 +2,9 @@
 
 namespace Spector\Import;
 
-class Import extends Spector\Common\Configurable
+use Spector\Common\Configurable;
+
+class Import extends Configurable
 {
 	protected $_name;
 	
@@ -25,9 +27,11 @@ class Import extends Spector\Common\Configurable
 	
 	const FETCHER_FILE 			= '\Spector\Import\Fetcher\File';
 	const FETCHER_FILE_SSH 	= '\Spector\Import\Fetcher\FileSSH';
+	const FETCHER_DRUPAL		= '\Spector\Import\Fetcher\Drupal';
 	
 	const HANDLER_SERIALIZED 	= '\Spector\Import\Handler\Serialized';
 	const HANDLER_PHPLOG 			= '\Spector\Import\Handler\PHPLog';
+	const HANDLER_ENTRIES			= '\Spector\Import\Handler\Entries';
 
 	public function getName()
 	{
@@ -98,7 +102,7 @@ class Import extends Spector\Common\Configurable
 	    $this->_defaultEnvironment = $_defaultEnvironment;
 	}
 
-	public function deleteSource($flag)
+	public function deleteSource($flag=null)
 	{
 			if (is_bool($flag)) $this->_deleteSource = $flag;
 			
