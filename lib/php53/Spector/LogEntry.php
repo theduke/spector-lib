@@ -38,7 +38,12 @@ class LogEntry implements Writable
 	
 	public function validate()
 	{
-		foreach (array('_project', '_environment', '_bucket', '_severity', '_message', '_time') as $property)
+		if (!is_numeric($this->_severity))
+		{
+			throw new \Exception('No severity set');
+		}
+		
+		foreach (array('_project', '_environment', '_bucket', '_message', '_time') as $property)
 		{
 			if (!$this->$property) throw new \Exception("No $property set.");
 		}

@@ -2,7 +2,7 @@
 
 namespace Spector\Writer;
 
-abstract class BaseWriter implements Writer
+abstract class BaseWriter
 {
 	public function fromArray(array $arr)
 	{

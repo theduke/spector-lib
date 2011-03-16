@@ -2,7 +2,7 @@
 
 namespace Spector;
 
-class Log
+class Logger
 {
 	protected $_writers = array();
 	
@@ -10,6 +10,20 @@ class Log
 	protected $_environment;
 	protected $_type = 'log';
 	protected $_bucket = 'main';
+	
+	protected $severityMap = array(
+		'EMERGENCY' => 0,
+		'ALERT' => 1,
+		'CRITICAL' => 2,
+		'ERROR' => 3,
+		'WARNING' => 4,
+		'NOTICE' => 5,
+		'INFO' => 6,
+		'DEBUG' => 7,
+		
+		'OTHER' => 8,
+		'MONITOR' => 9
+	);
 	
 	public function __construct()
 	{
@@ -22,8 +36,10 @@ class Log
 	 */
 	public function fromArray(array $data) {
 		// first handle writers
-		if (isset($data['writers'])) {
-			foreach ($data['writers'] as $type => $specs) {
+		if (isset($data['writers'])) 
+		{
+			foreach ($data['writers'] as $type => $specs) 
+			{
 				
 				// if its an actual writer instance just add it
 				if ($specs instanceof Writer) {
@@ -31,12 +47,18 @@ class Log
 					continue;
 				}
 				
+				// try to trigger autoloading for class
+				// php wont autoload when instantiating with variable as class name!
+				$className = ($type[0] === '\\') ? substr($type, 1) : $type;
+				class_exists($className, true);
+				
 				switch ($type)
 				{
-					case 'Spector\MongoWriter':
+					case '\Spector\Writer\MongoWriter':
 						$writer = new MongoWriter();
 						
-						if (!isset($specs['server']) || !isset($specs['database'])) {
+						if (!isset($specs['server']) || !isset($specs['database'])) 
+						{
 							throw new \Exception('Server or database not set.');
 						}
 						
@@ -102,8 +124,12 @@ class Log
 	
 	public function __call($name, $arguments)
 	{
+		$name = strtoupper($name);
+		
+		if (!isset($this->severityMap[$name])) throw new \Exception("Unknown severity '$name'");
+		
 		$arguments = array_values($arguments);
-		array_splice($arguments, 1, 0, $name);
+		array_splice($arguments, 1, 0, $this->severityMap[$name]);
 		
 		call_user_func_array(array($this, 'log'), $arguments);
 	}
@@ -112,13 +138,18 @@ class Log
 	{
 		$entry->validate();
 		
+		if (!count($this->_writers))
+		{
+			throw new \Exception('No writer set.');
+		}
+		
 		foreach ($this->_writers as $writer)
 		{
 			$writer->write($entry);
 		}
 	}
 	
-	public function addWriter(Writer $writer)
+	public function addWriter(Writer\Writer $writer)
 	{
 		$writer->validate();
 		$writer->initialize();
