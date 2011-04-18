@@ -4,7 +4,7 @@ namespace Spector\Import\Handler;
 
 use Spector\LogEntry;
 
-class Serialized extends AbstractHandler implements Handler
+class Json extends AbstractHandler implements Handler
 {
 	
 	/* (non-PHPdoc)
@@ -20,11 +20,11 @@ class Serialized extends AbstractHandler implements Handler
 		{
 			if (!strlen($rawEntry)) continue;
 			
-			$rawEntry = unserialize($rawEntry);
+			$rawEntry = json_decode($rawEntry);
 
 			if ($rawEntry === false)
 			{
-				echo 'Could not unserialize: ' . $rawEntry;
+				echo 'Could not decode json: ' . $rawEntry;
 			}
 			
 			$entry = new LogEntry();
