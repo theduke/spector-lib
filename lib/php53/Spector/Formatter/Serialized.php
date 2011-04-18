@@ -9,6 +9,6 @@ class Serialized implements Formatter
 	public function format(Writable $entry)
 	{
 		// escape newlines
-		return str_replace("\n", '\n', serialize($entry->toArray()));
+		return str_replace("\n", '\n', serialize($entry->toArray())) . PHP_EOL;
 	}
 }
