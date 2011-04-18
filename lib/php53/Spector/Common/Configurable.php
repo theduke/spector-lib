@@ -52,11 +52,23 @@ class Configurable
 		
 		foreach (get_object_vars($this) as 	$key)
 		{
-			$a[str_replace('_', '', $key)] = $this->$key;
+			
+			
+			$a[str_replace('_', '', $key)] = is_object($this->$key) && method_exists($this->$key, 'toArray') ? $this->$key->toArray() : $this->$key;
 		}
 		
 		if (!$this->_id) unset($a['id']);
 		
 		return $a;
 	}
+	
+	public function fromArray(array $a)
+	{
+		foreach ($a as $key => $value) 
+		{
+			if (!property_exists($this, '_' . $key)) continue;
+			$this->$key = $value;
+		}
+	}
 }
+
