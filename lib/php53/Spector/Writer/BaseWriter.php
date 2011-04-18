@@ -2,8 +2,18 @@
 
 namespace Spector\Writer;
 
+use Spector\Formatter\Formatter;
+
 abstract class BaseWriter
 {
+	
+	/**
+	 * Enter description here ...
+	 * 
+	 * @var Spector\Formatter\Formatter
+	 */
+	protected $_formatter;
+	
 	public function fromArray(array $arr)
 	{
 		foreach ($arr as $property => $value)
@@ -16,5 +26,15 @@ abstract class BaseWriter
 				$this->$property = $value;
 			}
 		}
+	}
+	
+	public function write(Writable $entry)
+	{
+		$this->_write($entry);
+	}
+	
+	public function setFormatter(Formatter $formatter)
+	{
+		$this->_formatter = $formatter;
 	}
 }

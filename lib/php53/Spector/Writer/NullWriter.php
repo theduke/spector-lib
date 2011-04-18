@@ -6,7 +6,7 @@ use Spector\LogEntry;
 
 class NullWriter
 {
-	public function write(Writable $entry)
+	public function _write(Writable $entry)
 	{
 		
 	}

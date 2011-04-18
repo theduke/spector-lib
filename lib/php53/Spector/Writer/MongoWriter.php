@@ -41,7 +41,7 @@ class MongoWriter extends BaseWriter implements Writer
 		$this->_connection->close();
 	}
 	
-	public function write(Writable $entry)
+	public function _write(Writable $entry)
 	{
 		$data = $entry->toArray();
 		

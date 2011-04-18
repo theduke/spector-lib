@@ -13,4 +13,6 @@ interface Writer
 	public function initialize();
 	
 	public function shutdown();
+	
+	public function setFormatter();
 }
