@@ -138,4 +138,18 @@ class Import extends Configurable
 	{
 	    $this->_remote = $_remote;
 	}
+	
+	public function fromArray(array $a)
+	{
+		if (isset($a['remote']) && is_array($a['remote']))
+		{
+			$remote = new Remote();
+			$remote->fromArray($a['remote']);
+			$this->_remote = $remote;
+			
+			unset($a['remote']);
+		}
+		
+		parent::fromArray($a);
+	}
 }
