@@ -11,7 +11,7 @@ class Logger
 	protected $_type = 'log';
 	protected $_bucket = 'main';
 	
-	protected $severityMap = array(
+	protected static $severityMap = array(
 		'EMERGENCY' => 0,
 		'ALERT' => 1,
 		'CRITICAL' => 2,
@@ -28,6 +28,19 @@ class Logger
 	public function __construct()
 	{
 		
+	}
+	
+	public static function mapSeverity($key)
+	{
+		static $flip;
+		if (!$flip) $flip = array_flip(self::$severityMap);
+		
+		if (!array_key_exists($key, $flip))
+		{
+			throw new \Exception("Unknown severity '$key'");
+		}
+		
+		return $flip[$key];
 	}
 	
 	/**
@@ -126,10 +139,10 @@ class Logger
 	{
 		$name = strtoupper($name);
 		
-		if (!isset($this->severityMap[$name])) throw new \Exception("Unknown severity '$name'");
+		if (!isset(self::$severityMap[$name])) throw new \Exception("Unknown severity '$name'");
 		
 		$arguments = array_values($arguments);
-		array_splice($arguments, 1, 0, $this->severityMap[$name]);
+		array_splice($arguments, 1, 0, self::$severityMap[$name]);
 		
 		call_user_func_array(array($this, 'log'), $arguments);
 	}
