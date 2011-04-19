@@ -1,6 +1,8 @@
 <?php
 
-namespace Spector\Formatter\Formatter;
+namespace Spector\Formatter;
+
+use Spector\Logger;
 
 use Spector\Writer\Writable;
 
@@ -10,7 +12,7 @@ class Readable implements Formatter
 	{
 		$output = sprintf('%s: %s: %s', 
 			date('Y-M-d h:i:s', $entry->getTime()->getTimestamp()), 
-			$entry->getSeverity(), 
+			Logger::mapSeverity($entry->getSeverity()), 
 			$entry->getMessage()) 
 			. PHP_EOL;
 			

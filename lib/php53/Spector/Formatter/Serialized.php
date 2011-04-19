@@ -1,6 +1,6 @@
 <?php
 
-namespace Spector\Formatter\Formatter;
+namespace Spector\Formatter;
 
 use Spector\Writer\Writable;
 
