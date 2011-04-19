@@ -2,6 +2,8 @@
 
 namespace Spector\Writer;
 
+use Spector\Formatter\Formatter;
+
 use Spector\LogEntry;
 
 interface Writer
@@ -14,5 +16,5 @@ interface Writer
 	
 	public function shutdown();
 	
-	public function setFormatter();
+	public function setFormatter(Formatter $formatter);
 }
