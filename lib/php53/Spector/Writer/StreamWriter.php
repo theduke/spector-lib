@@ -10,10 +10,9 @@ class StreamWriter extends BaseWriter implements Writer
 	
 	protected $_handle;
 	
-	public function __construct($stream=null, $format=null)
+	public function __construct($stream=null)
 	{
 		$this->setStream($stream);
-		$this->setFormat($format);
 	}
 	
 	public function _write(Writable $entry)
@@ -28,8 +27,8 @@ class StreamWriter extends BaseWriter implements Writer
 	
 	public function validate()
 	{
-		if (!$this->_stream || !$this->_format)
-			throw new \Exception('Stream or format not set.');
+		if (!$this->_stream)
+			throw new \Exception('Stream not set.');
 	}
 	
 	public function initialize()
