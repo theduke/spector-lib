@@ -14,7 +14,7 @@ class LogHandler
 		self::$_log->log($message, $severity, $data, $bucket, $type, $environment, $project, $time);
 	}
 	
-	public static function setLog(Log $log)
+	public static function setLog(Logger $log)
 	{
 		self::$_log = $log;
 	}
