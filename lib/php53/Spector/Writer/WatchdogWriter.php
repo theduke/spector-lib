@@ -4,7 +4,7 @@ namespace Spector\Writer;
 
 use Spector\LogEntry;
 
-class WatchdogWriter
+class WatchdogWriter extends BaseWriter implements Writer
 {
 	public function _write(Writable $entry)
 	{
