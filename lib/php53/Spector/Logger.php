@@ -21,8 +21,7 @@ class Logger
 		'INFO' => 6,
 		'DEBUG' => 7,
 		
-		'OTHER' => 8,
-		'MONITOR' => 9
+		'OTHER' => 8
 	);
 	
 	public function __construct()
@@ -104,7 +103,7 @@ class Logger
 		}
 	}
 	
-	public function log($message, $severity, $data=null, $bucket=null, $type=null, $environment=null, $project=null, $time=null)
+	public function log($message, $severity, $data=null, $messageId=null, $bucket=null, $type=null, $environment=null, $project=null, $time=null)
 	{
 		if (!$project) $project = $this->_project;
 		if (!$environment) $environment = $this->_environment;
@@ -120,12 +119,13 @@ class Logger
 		$entry->setSeverity(strtoupper($severity));
 		$entry->setTime($time);
 		$entry->setData($data);
+		$entry->setMessageId($messageId);
 		$entry->setType($type);
 		
 		$this->logEntry($entry);
 	}
 	
-	public function monitor($task, $state)
+	public function monitor($messageId, $state)
 	{
 		$message = "$task;$state";
 		

@@ -34,6 +34,7 @@ class LogEntry implements Writable
 	 */
 	protected $_time;
 	protected $_message;
+	protected $_messageId;
 	protected $_data;
 	
 	public function validate()
@@ -130,6 +131,16 @@ class LogEntry implements Writable
 		$this->_data = $data;
 	}
 	
+	public function setMessageId($id)
+	{
+		$this->_messageId = $id;
+	}
+	
+	public function getMessageId()
+	{
+		return $this->_messageId;
+	}
+	
 	public function getData()
 	{
 		return $this->_data;
@@ -144,6 +155,7 @@ class LogEntry implements Writable
 			'severity' => $this->_severity,
 			'time'	=> $this->_time,
 			'message' => $this->_message,
+			'messageId' => $this->_messageId,
 			'data' => $this->_data,
 			'type' => $this->_type
 		);
