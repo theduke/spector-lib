@@ -29,7 +29,7 @@ class Json extends AbstractHandler implements Handler
 			
 			$entry = new LogEntry();
 			
-			$entry->setTime($rawEntry['time']);
+			$entry->setTime(new \MongoDate($rawEntry['time']));
 			$entry->setMessage($rawEntry['message']);
 			$entry->setSeverity($rawEntry['severity']);
 			$entry->setData($rawEntry['data']);

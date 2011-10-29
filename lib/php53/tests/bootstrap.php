@@ -1,10 +1,10 @@
 <?php
 
-define('SPECTOR_DATA_PATH', __DIR__ . '/data');
+if (!defined('SPECTOR_DATA_PATH')) define('SPECTOR_DATA_PATH', __DIR__ . '/data');
 
 $libPath = realpath(__DIR__ . '/..');
 
-include $libPath . '/Spector/Common/ClassLoader.php';
+require_once $libPath . '/Spector/Common/ClassLoader.php';
 
 $loader = new \Spector\Common\ClassLoader('Spector', $libPath);
 $loader->register();

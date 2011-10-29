@@ -21,7 +21,8 @@ class Logger
 		'INFO' => 6,
 		'DEBUG' => 7,
 		
-		'OTHER' => 8
+		'OTHER' => 8,
+		'MONITOR' => 10
 	);
 	
 	public function __construct()
@@ -29,17 +30,23 @@ class Logger
 		
 	}
 	
-	public static function mapSeverity($key)
+	public static function getSeverityMap() {
+		return self::$severityMap;
+	}
+	
+	public static function mapSeverity($key, $nameToId=false)
 	{
 		static $flip;
 		if (!$flip) $flip = array_flip(self::$severityMap);
 		
-		if (!array_key_exists($key, $flip))
+		$target = $nameToId ? self::$severityMap : $flip;
+		
+		if (!array_key_exists($key, $target))
 		{
 			throw new \Exception("Unknown severity '$key'");
 		}
 		
-		return $flip[$key];
+		return $target[$key];
 	}
 	
 	/**

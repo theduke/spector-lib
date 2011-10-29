@@ -6,7 +6,6 @@ use Spector\LogEntry;
 
 class Entries extends AbstractHandler implements Handler
 {
-	
 	/* (non-PHPdoc)
 	 * @see Spector\Import\Handler.Handler::getEntries()
 	 */

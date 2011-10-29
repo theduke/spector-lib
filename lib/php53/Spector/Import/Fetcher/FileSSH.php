@@ -49,28 +49,28 @@ class FileSSH extends AbstractFetcher implements Fetcher
 		$handle = ssh2_connect($host, (float)$port);
 		
 		if (!$handle) 
-			throw new Exception("Could not connect to server $host on port $port");
+			throw new \Exception("Could not connect to server $host on port $port");
 		
 		if (!ssh2_auth_password($handle, $user, $password))
-			throw new Exception("Could not login. Invalid ahtentication details.");
+			throw new \Exception("Could not login. Invalid ahtentication details.");
 			
-		$localPath = '/tmp/spector';
+		$localPath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'spector';
 		
 		if (!is_dir($localPath))
 		{
 			$flag = mkdir($localPath, 0777, true);
-			if (!$flag) throw new Exception("Tmp directory $localPath does not exist and could not be created.");
+			if (!$flag) throw new \Exception("Tmp directory $localPath does not exist and could not be created.");
 		}
 		
 		$localPath .= basename($path);
 		
 		$flag = ssh2_scp_recv($handle, $path, $localPath);
 		
-		if (!$flag) throw new Exception("Could not copy file from $host:$path to $localPath");
+		if (!$flag) throw new \Exception("Could not copy file from $host:$path to $localPath");
 		
 		$content = file_get_contents($localPath);
 		
-		if ($this->_config->deleteSource())
+		if (true) //$this->_config->deleteSource())
 		{
 			file_put_contents($localPath, '');
 			ssh2_scp_send($handle, $localPath, $path, 0777);

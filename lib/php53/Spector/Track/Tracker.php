@@ -54,6 +54,5 @@ class Tracker
 		}
 		
 		self::$_writer->write($entry);
-	}
-	
+	}	
 }

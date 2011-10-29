@@ -26,12 +26,13 @@ class Import extends Configurable
 	protected $_remote;
 	
 	const FETCHER_FILE 			= '\Spector\Import\Fetcher\File';
-	const FETCHER_FILE_SSH 	= '\Spector\Import\Fetcher\FileSSH';
+	const FETCHER_FILE_SSH 	    = '\Spector\Import\Fetcher\FileSSH';
 	const FETCHER_DRUPAL		= '\Spector\Import\Fetcher\Drupal';
 	
 	const HANDLER_SERIALIZED 	= '\Spector\Import\Handler\Serialized';
-	const HANDLER_PHPLOG 			= '\Spector\Import\Handler\PHPLog';
-	const HANDLER_ENTRIES			= '\Spector\Import\Handler\Entries';
+	const HANDLER_PHPLOG 		= '\Spector\Import\Handler\PHPLog';
+	const HANDLER_JSON			= '\Spector\Import\Handler\Json';
+	const HANDLER_ENTRIES		= '\Spector\Import\Handler\Entries';
 
 	public function getName()
 	{

@@ -33,6 +33,7 @@ class SerializedHandlerTest extends PHPUnit_Framework_TestCase
 		$handler = new Serialized();
 		$entries = $handler->getEntries($data, $import);
 		
+		var_dump($entries);
 		$entry = $entries[8];
 		
 		$this->assertEquals('php', $entry->getType());

@@ -11,6 +11,6 @@ class Json implements Formatter
 		$output = json_encode($entry->toArray());
 
 		// escape newlines
-		return str_replace("\n", '\n', $output) . PHP_EOL;
+		return str_replace("\n", "\\n", $output) . PHP_EOL;
 	}
 }

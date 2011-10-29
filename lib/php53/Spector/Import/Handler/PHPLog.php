@@ -84,10 +84,10 @@ class PHPLog extends AbstractHandler implements Handler
 				$entry = new LogEntry();
 				
 				$severity = $this->mapPhpType($matches[2]);
-			
+
 				$time = strtotime($matches[1]);
 				// convert to microseconds
-				$time *= 1000000;
+				$time = new \MongoDate($time);
 				
 				$entry->setMessage($matches[3]);
 				$entry->setTime($time);

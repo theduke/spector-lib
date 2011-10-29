@@ -59,4 +59,3 @@ class Entry extends Spector\Common\Configurable
 	
 	protected $_extraData = array();
 }
-

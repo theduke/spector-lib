@@ -22,7 +22,9 @@ abstract class AbstractHandler
 	{
 		if (!$entry->getProject()) 			$entry->setProject($import->getDefaultProject());
 		if (!$entry->getBucket())  			$entry->setBucket($import->getDefaultBucket());
-		if (!$entry->getEnvironment()) 	$entry->setEnvironment($import->getDefaultEnvironment());
-		if (!$entry->getType())					$entry->setType($import->getDefaultType());
+		if (!$entry->getEnvironment()) 		$entry->setEnvironment($import->getDefaultEnvironment());
+		if (!$entry->getType())				$entry->setType($import->getDefaultType());
+		
+		return $entry;
 	}
 }

@@ -8,8 +8,44 @@ use Spector\Import\Fetcher\Fetcher;
 
 class Importer
 {
+	/**
+	 * @param Import $import
+	 * @param \Spector\Logger $logger
+	 * 
+	 * @return array
+	 *   assoc array('successCount' => 22, 'errors' => array('Errormsg'))
+	 */
+	public function doImportAndPersist(Import $import, \Spector\Logger $logger)
+	{
+		$entries = $this->executeImport($import);
+
+		$successCount = 0;
+		$errors = array();
+		
+		foreach ($entries as $entry) 
+		{
+			try 
+			{
+				$logger->logEntry($entry);
+			}
+			catch (\Exception $e) 
+			{
+				$errors[] = $e->getMessage();
+				continue;
+			}
+			
+			++$successCount;
+		}
+		
+		var_dump($errors);
+		
+		return array(
+			'successCount' => $successCount,
+			'errors' => $errors
+		);
+	}
 	
-	public function doImport(Import $import)
+	public function executeImport(Import $import)
 	{
 		$fetcher = $this->getFetcher($import);
 		$handler = $this->getHandler($import);
@@ -17,7 +53,7 @@ class Importer
 		$fetcher->initialize($import);
 		
 		$data = $fetcher->fetchData();
-		
+
 		return $handler->getEntries($data, $import);
 	}
 	

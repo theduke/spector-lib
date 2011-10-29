@@ -23,7 +23,6 @@ class PHPLogTest extends PHPUnit_Framework_TestCase
 			return $import;
 	}
 	
-	
 	public function testFetch()
 	{
 		$import = $this->getImport();
@@ -42,6 +41,5 @@ class PHPLogTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(826, strlen($entry->getData()));
 	}
 	
+	
 }
-	
-	
