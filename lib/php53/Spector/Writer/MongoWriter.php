@@ -16,14 +16,14 @@ class MongoWriter extends BaseWriter implements Writer
 	
 	public function validate()
 	{
-		if (!($this->_connection instanceof Mongo))
+		if (!($this->_connection instanceof \Mongo))
 			throw new \Exception('No Mongo connection set.');
 			
-		$flag = ($this->_database instanceof MongoDB) || is_string($this->_database); 
+		$flag = ($this->_database instanceof \MongoDB) || is_string($this->_database); 
 		if (!$flag)
 			throw new \Exception('Database is neither MongoDB instance nor string');
 			
-		if (!($this->_collection instanceof MongoCollection) && !is_string($this->_collection))
+		if (!($this->_collection instanceof \MongoCollection) && !is_string($this->_collection))
 			throw new \Exception('Collection is neither MongoCollection instance nor string');
 	}
 	
@@ -45,9 +45,9 @@ class MongoWriter extends BaseWriter implements Writer
 	{
 		$data = $entry->toArray();
 		
-		if (isset($data['time']) && !$data['time'])
+		if (!isset($data['time']) || !$data['time'])
 		{
-			$data['time'] = microtime();
+			$data['time'] = new MongoDate();
 		}
 		
 		$this->_collection->insert($data);
